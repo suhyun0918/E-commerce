@@ -4,6 +4,11 @@ server:
 spring:
   application:
     name: user-service
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
   datasource:
     url: jdbc:h2:tcp://localhost/C:\Users\Sion\Desktop\Files\DB\h2\database
     username: sa
@@ -11,7 +16,7 @@ spring:
     driver-class-name: org.h2.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
         format_sql: true
@@ -41,4 +46,4 @@ management:
   endpoints:
     web:
       exposure:
-        include: refresh, health, beans, httptrace
+        include: refresh, health, beans, httptrace, busrefresh

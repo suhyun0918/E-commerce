@@ -4,8 +4,22 @@ server:
 spring:
   application:
     name: config-service
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  profiles:
+    active: native
   cloud:
     config:
       server:
+        native:
+          search-locations: file:///C:\Users\Sion\Desktop\Files\Workspace\Project\config-files\config-files-native
         git:
-          uri: file://C:\Users\Sion\Desktop\Files\Workspace\Project\E-commerce\config-files
+          uri: https://github.com/Oniqued/spring-cloud-config.git
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, busrefresh
