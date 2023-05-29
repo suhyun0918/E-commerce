@@ -57,6 +57,15 @@ spring:
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
             - AuthorizationHeaderFilter # 여기
 
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/user-service/actuator/**
+            - Method=GET, POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+
         - id: catalog-service
           uri: lb://catalog-service
           predicates:
@@ -67,6 +76,13 @@ spring:
           predicates:
             - Path=/order-service/**
 
+
 token:
   expiration_time: 86400000
   secret: user_token
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, beans, health, httptrace
