@@ -15,7 +15,7 @@ public class OrderEntity implements Serializable { //직렬화의 목적 : 가�
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 120, unique = true)
+    @Column(nullable = false)
     private String productId;
     @Column(nullable = false)
     private Integer qty;
