@@ -33,6 +33,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.modelmapper:modelmapper:3.1.1'
     implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.7.2'
+    implementation group: 'org.springframework.kafka', name: 'spring-kafka', version: '3.0.7'
 
 }
 
