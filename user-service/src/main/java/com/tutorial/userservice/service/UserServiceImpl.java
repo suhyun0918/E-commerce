@@ -5,6 +5,8 @@ import com.tutorial.userservice.dto.UserDto;
 import com.tutorial.userservice.jpa.UserEntity;
 import com.tutorial.userservice.jpa.UserRepository;
 import com.tutorial.userservice.vo.ResponseOrder;
+import feign.FeignException;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
     UserRepository userRepository;
     BCryptPasswordEncoder passwordEncoder;
@@ -91,16 +94,24 @@ public class UserServiceImpl implements UserService {
 
         /* Using as rest template */
         // 주소값, 호출하고자하는 매소드 타입, 요청할때 파라미터(주소에 사용자 ID 포함되어있으므로 null), 전달받고자 할때 어떤 형식으로 받을 것인지
-        ResponseEntity<List<ResponseOrder>> orderListResponse =
-                restTemplate.exchange(orderUrl, HttpMethod.GET, null,
-                                                new ParameterizedTypeReference<List<ResponseOrder>>() {});
-
-        // 필요로 하는 것은 List<ResponseOrder> 타입이다. responseOrder가 저장되어있는 list타입을 가져올 수 있다.
-        List<ResponseOrder> ordersList = orderListResponse.getBody();
+//        ResponseEntity<List<ResponseOrder>> orderListResponse =
+//                restTemplate.exchange(orderUrl, HttpMethod.GET, null,
+//                                                new ParameterizedTypeReference<List<ResponseOrder>>() {});
+//
+//        // 필요로 하는 것은 List<ResponseOrder> 타입이다. responseOrder가 저장되어있는 list타입을 가져올 수 있다.
+//        List<ResponseOrder> ordersList = orderListResponse.getBody();
 
         /* Using a feign client */
-//        List<ResponseOrder> ordersList = orderServiceClient.getOrders(userId);
+        /* Feign exeception handling*/
+//        List<ResponseOrder> ordersList = null;
+//        try{
+//            ordersList = orderServiceClient.getOrders(userId);
+//        }catch (FeignException ex){
+//            log.error(ex.getMessage());
+//        }
 
+        /* ErrorDecoder */
+        List<ResponseOrder> ordersList = orderServiceClient.getOrders(userId);
         userDto.setOrders(ordersList);
 
         return userDto;

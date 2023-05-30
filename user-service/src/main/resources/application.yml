@@ -17,9 +17,12 @@ spring:
   h2:
     console:
       enabled: true
+      settings:
+        web-allow-others: true
+      path: /h2-console
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
@@ -38,7 +41,7 @@ greeting:
 
 logging:
   level:
-    com.tutorial.userservice: DEBUG
+    com.tutorial.userservice.client: DEBUG
 
 
 #token:
